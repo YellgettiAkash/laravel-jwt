@@ -12,6 +12,7 @@ Today, In this section we will learn how to integrate Jwt-Auth in laravel.
 Api Authentication in laravel using Jwt
 (RESTfull Api authentication using Jwt)
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/O-hVQG3_W6k" frameborder="0" allowfullscreen></iframe>
 
 Before,Starting the developement of the app create virtual host and exact the laravel
 file in that folder
