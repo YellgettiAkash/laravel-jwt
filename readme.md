@@ -1,6 +1,6 @@
-=================================================================================================
+
 Introduction
-=================================================================================================
+--------------------------------------------------
 
 Hi Guys ,
 My name is Akash Yellgetti,I m being using laravel framework 5.3 for few months,
@@ -31,9 +31,8 @@ i had previously migrated the migration so i deleting migration and will do it a
 i thing  download is completed so.there was some issues i have resolved it now its downloaded 
 
 
-===================================================================
 Steps
-===================================================================
+--------------------------------------------------
 Step 1:-
 Install Laravel 
 composer create-project --prefer-dist laravel/laravel example.com
@@ -124,33 +123,29 @@ copy paste the the lines
 as we are create token system authenication so we dont need any csrf authentication
 comment folloing line in kernel
 
+	use Illuminate\Http\Request;
+	use JWTAuth;
 
+	class LoginController extends Controller
+	{
+	    public function authenticate(Request $request)
+	    {
+		// grab credentials from the request
+		$credentials = $request->only('email', 'password');
+		// dd($credentials);
+		try {
+		    $token = JWTAuth::attempt($credentials);
+		    dd($token);
+		    // attempt to verify the credentials and create a token for the user
+		    if (! $token) {
+			return response()->json(['error' => 'invalid_credentials'], 401);
+		    }
+		} catch (JWTException $e) {
+		    // something went wrong whilst attempting to encode the token
+		    return response()->json(['error' => 'could_not_create_token'], 500);
+		}
 
-use Illuminate\Http\Request;
-use JWTAuth;
-
-class LoginController extends Controller
-{
-  
-
-    public function authenticate(Request $request)
-    {
-        // grab credentials from the request
-        $credentials = $request->only('email', 'password');
-        // dd($credentials);
-        try {
-            $token = JWTAuth::attempt($credentials);
-            dd($token);
-            // attempt to verify the credentials and create a token for the user
-            if (! $token) {
-                return response()->json(['error' => 'invalid_credentials'], 401);
-            }
-        } catch (JWTException $e) {
-            // something went wrong whilst attempting to encode the token
-            return response()->json(['error' => 'could_not_create_token'], 500);
-        }
-
-        // all good so return the token
-        return response()->json(compact('token'));
-    }
-}
+		// all good so return the token
+		return response()->json(compact('token'));
+	    }
+	}
